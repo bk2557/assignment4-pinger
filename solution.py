@@ -49,8 +49,8 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         recPacket, addr = mySocket.recvfrom(1024)
 
         # Fill in start
-        icmp = struct.unpack('recPacket', 48)
         # Fetch the ICMP header from the IP packet
+        icmp = struct.unpack("bbHHh", header)
         pingTime = timeReceived - startedSelect
         return pingTime
 
@@ -122,7 +122,8 @@ def ping(host, timeout=1):
     packet_avg = mean(delayTimes)
     packet_max = max(delayTimes)
     stdev_var = stdev(delayTimes)
-    vars = [str(round(packet_min, 8)), str(round(packet_avg, 8)), str(round(packet_max, 8)),str(round(stdev(stdev_var), 8))]
+    vars = [str(round(packet_min, 8)), str(round(packet_avg, 8)), str(round(packet_max, 8)),
+            str(round(stdev(stdev_var), 8))]
 
     return vars
 
