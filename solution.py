@@ -1,3 +1,4 @@
+
 from socket import *
 import os
 import sys
@@ -52,7 +53,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         # Fetch the ICMP header from the IP packet
         icmp = recPacket [20:28]
         type, code, checksum, id, sequence = struct.unpack("bbHHh", icmp)
-        
+
         pingTime = timeReceived - startedSelect
         return pingTime
 
@@ -115,17 +116,16 @@ def ping(host, timeout=1):
     delayTimes = []
     for i in range(0, 4):  # Four pings will be sent (loop runs for i=0, 1, 2, 3)
         delay = doOnePing(dest, timeout)
-        print(delay)
         delayTimes[i] = [delay]
+        print(delay)
         time.sleep(1)  # one second
 
     # You should have the values of delay for each ping here; fill in calculation for packet_min, packet_avg, packet_max, and stdev
     packet_min = min(delayTimes)
     packet_avg = mean(delayTimes)
     packet_max = max(delayTimes)
-    stdev_var = stdev(delayTimes)
-    vars = [str(round(packet_min, 8)), str(round(packet_avg, 8)), str(round(packet_max, 8)),
-            str(round(stdev(stdev_var), 8))]
+    stdev_var = delayTimes
+    vars = [str(round(packet_min, 8)), str(round(packet_avg, 8)), str(round(packet_max, 8)), str(round(stdev(stdev_var), 8))]
 
     return vars
 
