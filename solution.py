@@ -53,8 +53,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         # Fetch the ICMP header from the IP packet
         icmp = recPacket [20:28]
         type, code, checksum, id, sequence = struct.unpack("bbHHh", icmp)
-
-        pingTime = timeReceived - startedSelect
+        pingTime = (timeReceived - startedSelect) * 1000
         return pingTime
 
         # Fill in end
@@ -113,12 +112,13 @@ def ping(host, timeout=1):
 
     # Send ping requests to a server separated by approximately one second
     # Add something here to collect the delays of each ping in a list so you can calculate vars after your ping
-    delayTimes = []
+    delayTimes = [0.00000000, 0.00000000, 0.00000000, 0.00000000]
     for i in range(0, 4):  # Four pings will be sent (loop runs for i=0, 1, 2, 3)
         delay = doOnePing(dest, timeout)
-        delayTimes[i] = [delay]
         print(delay)
+        delayTimes[i] = delay
         time.sleep(1)  # one second
+
 
     # You should have the values of delay for each ping here; fill in calculation for packet_min, packet_avg, packet_max, and stdev
     packet_min = min(delayTimes)
