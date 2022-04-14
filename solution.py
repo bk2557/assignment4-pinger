@@ -52,8 +52,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 
         # Fetch the ICMP header from the IP packet
         pingTime = timeReceived - startedSelect
-
-        return pingTime
+            return pingTime
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
