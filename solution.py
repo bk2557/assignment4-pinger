@@ -50,7 +50,9 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 
         # Fill in start
         # Fetch the ICMP header from the IP packet
-        icmp = struct.unpack("bbHHh", header)
+        icmp = recPacket [20:24]
+        type, code, checksum, id, sequence = struct.unpack("bbHHh", icmp)
+        
         pingTime = timeReceived - startedSelect
         return pingTime
 
